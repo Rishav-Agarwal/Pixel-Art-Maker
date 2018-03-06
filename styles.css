@@ -1,0 +1,74 @@
+body {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Poiret One', cursive;
+    font-size: 60px;
+    margin: 0;
+    padding: 10px;
+    color: black;
+    background: orange;
+    box-shadow: 0px 3px 5px 0px #00000066;
+    text-shadow: 4px 2px 3px #00000066;
+}
+
+h2 {
+    margin: 1em 0 0.25em;
+    font-family: 'Poiret One', cursive;
+}
+
+h2:first-of-type {
+    margin-top: 0.5em;
+}
+
+table,
+tr,
+td {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    box-shadow: 0px 0px 10px 2px #00000066;
+    cursor: pointer;
+}
+
+tr {
+    height: 20px;
+}
+
+td {
+    width: 20px;
+}
+
+input[type=number] {
+    width: 6em;
+    font-family: 'Poiret One', cursive;
+}
+
+input[type=submit], input[type=reset], #btn-preview, #btn-download {
+    display: inline-block;
+    padding: 10px;
+    width: 150px;
+    margin: 10px;
+    box-shadow: 5px 4px 10px 0px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.5s;
+    background-color: #FF9800;
+    border: none;
+    outline: none;
+    font-family: 'Poiret One', cursive;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-decoration: none;
+    color: black;
+}
+
+input[type=submit]:hover, input[type=reset]:hover, #btn-preview:hover, #btn-download:hover {
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
