@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pixel Art Maker!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Art Maker - by Rishav Agarwal</title>
     <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel = "stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/favicon.png" type="image/gif">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
-    <script src="designs.js"></script>
+    <script src="scripts/html2canvas.min.js" type="text/javascript"></script>
+    <script src="scripts/designs.js" type="text/javascript"></script>
 </head>
 <body>
-    <h1>Pixel Art Maker</h1>
+    <header id="header"><img src="assets/favicon.png" height="40" Width="40">&nbsp;Pixel Art Maker</header>
 
-    <h2>Choose Grid Size</h2>
-    <form id="sizePicker">
-        Grid Height:
-        <input type="number" id="inputHeight" name="height" min="1" max="100" value="1">
-        Grid Width:
-        <input type="number" id="inputWidth" name="width" min="1" max="50" value="1">
-        <input type="submit">
-        <input type="reset">
-    </form>
+    <div id="container">
+        <h2>Choose Grid Size</h2>
+        <form id="sizePicker">
+            Grid Height:
+            <input type="number" id="inputHeight" name="height" min="1" max="100" value="1">
+            Grid Width:
+            <input type="number" id="inputWidth" name="width" min="1" max="50" value="1">
+            <input type="submit">
+            <input type="reset">
+        </form>
 
-    <h2>Pick A Color</h2>
-    <input type="color" id="colorPicker">
+        <h2>Pick A Color</h2>
+        <input type="color" id="colorPicker" value="#FF9800">
 
-    <h2>Design Canvas</h2>
-    <table id="pixelCanvas"></table>
+        <h2>Design Canvas</h2>
+        <table id="pixelCanvas"></table>
 
-    <button id="btn-preview">Preview</button>
-    <a id="btn-download" href="#" download="capture.png" target="_blank">Download</a>
+        <button id="btn-preview">Preview</button>
+        <a id="btn-download" href="#" download="capture.png" target="_blank"><button id="btn-down" onclick="">Download</button></a>
 
-    <div id="preview-bitmap"></div>
+        <div id="preview-bitmap"></div>
+    </div>
+
+    <footer id="footer">
+        Made with <span class="icon ion-heart" style="color: red;"></span> by <strong>Rishav Agarwal</strong> using <span class="icon ion-social-html5" style="color: #e44d26;"></span>, <span class="icon ion-social-css3" style="color: #22A7F0;"></span> and <span class="icon ion-social-javascript" style="color: #4CAF50;"></span>
+    </footer>
 </body>
 </html>

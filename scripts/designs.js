@@ -1,4 +1,7 @@
 $(function() {
+    const header = $('header#header');
+    const container = $('div#container');
+    const footer = $('footer#footer');
     const table = $('table#pixelCanvas');
     const form = $('form#sizePicker');
     const downButton = $('a#btn-download');
@@ -7,12 +10,18 @@ $(function() {
     const inputWidth = $('input#inputWidth');
     const submit = $('input[type=submit]');
     const reset = $('input[type=reset]');
+    const colorPicker = $('input#colorPicker')
     const previewImage = $('div#preview-bitmap');
-    var mouseLeftPressed = false;
-    var mouseRightPressed = false;
-    var currHeight = 0, currWidth = 0;
+    let mouseLeftPressed = false;
+    let mouseRightPressed = false;
+    let currHeight = 0, currWidth = 0;
 
     function makeGrid() {
+        if (inputWidth.val() > 70)
+            inputWidth.val("70");
+        if (inputHeight.val() > 100)
+            inputHeight.val("100");
+
         const height = inputHeight.val();
         const width = inputWidth.val();
 
@@ -20,9 +29,9 @@ $(function() {
             $(this).remove();
         });
 
-        for (var i = 0; i < height; ++i) {
-            var str = "";
-            for (var j = 0; j < width; ++j) {
+        for (let i = 0; i < height; ++i) {
+            let str = "";
+            for (let j = 0; j < width; ++j) {
                 str += '<td></td>';
             }
             table.append('<tr>' + str + '</tr>');
@@ -32,7 +41,7 @@ $(function() {
     }
 
     function getCanvas(func) {
-        html2canvas(table).then(function(canvas) {
+        html2canvas(table.get(0)).then(function(canvas) {
             func(canvas);
         });
     }
@@ -78,12 +87,23 @@ $(function() {
         table.children().each(function() {
             $(this).remove();
         });
-        hideTable();
         hideDownloadButton();
+        inputWidth.val("10");
+        inputHeight.val("10");
+        makeGrid();
     }
 
+    function setContainerMargin() {
+        container.css("margin-bottom", footer.height() + 30);
+    }
+
+    inputWidth.val("10");
+    inputHeight.val("10");
     hideDownloadButton();
-    hideTable();
+    setContainerMargin();
+    makeGrid();
+
+    $(window).resize(setContainerMargin);
 
     submit.on('click', function(event) {
         if (inputWidth.val() > 0 && inputHeight.val() > 0) {
@@ -93,8 +113,10 @@ $(function() {
         }
     });
 
-    reset.on('click', function() {
+    reset.on('click', function(e) {
+        e.preventDefault();
         resetArt();
+        colorPicker.val("#FF9800");
     });
 
     table.on('contextmenu', 'td', function() {
@@ -102,13 +124,13 @@ $(function() {
     });
 
     table.on('click', 'td', function(event) {
-        var color = $('input[type = "color"]').val();
+        let color = colorPicker.val();
         $(this).css('background-color', color).css('opacity', 1.0);
     });
 
     table.on('mouseover', 'td', function(event) {
         if (mouseLeftPressed) {
-            var color = $('input[type = "color"]').val();
+            let color = colorPicker.val();
             $(this).css('background-color', color).css('opacity', 1.0);
         } else if (mouseRightPressed) {
             $(this).css('background-color', 'white').css('opacity', 0.0);
@@ -139,9 +161,9 @@ $(function() {
     previewButton.click(function() {
         if (currWidth > 0 && currHeight > 0) {
             getCanvas(function(canvas) {
-                $('#preview-bitmap').children().remove();
-                $('#preview-bitmap').append(canvas);
-                var image = canvas.toDataURL("image/png").replace(/^data:image\/png/, "data:application/octet-stream");
+                previewImage.children().remove();
+                previewImage.append(canvas);
+                let image = canvas.toDataURL("image/png").replace(/^data:image\/png/, "data:application/octet-stream");
                 $('#btn-download').attr("href", image);
                 showDownloadButton();
             });
