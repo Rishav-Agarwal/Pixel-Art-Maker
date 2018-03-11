@@ -5,12 +5,66 @@ body {
     font-family: 'Poiret One', cursive;
 }
 
+/* Customize header */
 header#header {
     font-size: 60px;
     font-weight: 700;
     padding: 10px;
     color: orange;
     font-family: 'VT323', monospace;
+}
+
+/**
+ * How to use?
+ */
+.details-use {
+    padding: 8px;
+    padding-top: 0px;
+    border: 3px dotted orange;
+    border-radius: 8px;
+    background: #F5F5F5;
+    display: block;
+    margin: auto;
+    max-width: 50%;
+    min-width: 50%;
+}
+
+.details-use>.summary-use {
+    color: orange;
+    font-size: 20px;
+    padding: 4px;
+    border-radius: 4px;
+    background: white;
+    border-left: 5px solid orange;
+    border-right: 5px solid orange;
+    cursor: pointer;
+}
+
+.details-use>.ul-use {
+    font-size: 16px;
+    font-weight: normal;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    display: none;
+    cursor: pointer;
+}
+
+.details-use>ul>li {
+    padding: 4px;
+}
+
+.details-use>ul>li:hover {
+    font-weight: bold;
+    background: white;
+    border-left: 5px solid orange;
+    border-right: 5px solid orange;
+    border-radius: 4px;
+}
+
+.icon-use {
+    color: orange;
 }
 
 h2 {
@@ -31,8 +85,7 @@ table {
     border-collapse: collapse;
     margin: 0 auto;
     box-shadow: 0px 0px 20px 2px orange;
-    cursor: url(assets/paint.png), pointer;
-    overflow-x: scroll;
+    cursor: url(assets/paint.png) 0 20, pointer;
 }
 
 tr {
@@ -43,6 +96,14 @@ td {
     width: 20px;
 }
 
+/* Form */
+form#sizePicker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 input[type=number] {
     width: 6em;
     transition: box-shadow 0.5s;
@@ -50,20 +111,19 @@ input[type=number] {
     width: 100px;
     margin: 10px;
     border-radius: 4px;
-    box-shadow: 5px 4px 10px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 8px 5px 20px 0px rgba(0, 0, 0, 0.3);
 }
 
-input[type=submit]:hover, input[type=reset]:hover, #btn-preview:hover, #btn-download:hover {
+input[type=number]:hover{
     box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
 }
 
-input[type=submit], input[type=reset], #btn-preview, #btn-download {
+input[type=submit], input[type=reset], [id|=btn], [class|=btn] {
     display: inline-block;
     padding: 10px;
     width: 150px;
     margin: 10px;
-    box-shadow: 5px 4px 10px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 8px 5px 20px 0px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.5s;
     background-color: orange;
     border: none;
@@ -76,10 +136,98 @@ input[type=submit], input[type=reset], #btn-preview, #btn-download {
     color: black;
 }
 
-input[type=number]:hover{
+input[type=submit]:hover, input[type=reset]:hover, [id|=btn]:hover, [class|=btn]:hover {
     box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+/* Form end */
+
+/* Modal for importing table */
+div#import-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0px 0px 20px 0px rgb(0, 0, 0);
+    max-width: 90%;
+    max-height: 90%;
+    min-width: 50%;
 }
 
+#close-import-modal {
+    color: orange;
+    background-color: rgba(0, 0, 0, 0.0);
+    position: fixed;
+    left: 100%;
+    padding: 8px;
+    transform: translateX(-100%);
+    transition: filter 0.5s;
+    top: 0;
+    border: none;
+    outline: none;
+    font-size: 24px;
+    cursor: pointer;
+    filter: drop-shadow(3px 3px 5px #00000044);
+}
+
+#close-import-modal:hover {
+    filter: drop-shadow(0px 0px 1px #00000044);
+}
+
+h4.import-modal-or {
+    text-align: center;
+    overflow: hidden;
+}
+
+h4.import-modal-or::before, h4.import-modal-or::after {
+    background-color: #000000;
+    height: 1px;
+    display: inline-block;
+    width: 50%;
+    content: "";
+    position: relative;
+    vertical-align: middle;
+}
+
+h4.import-modal-or::before {
+    margin-left: -50%;
+}
+
+h4.import-modal-or::after {
+    margin-right: -50%;
+}
+
+textarea {
+    transition: box-shadow 0.5s;
+    border-radius: 4px;
+    outline: none;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 50%;
+    box-shadow: 8px 5px 20px 0px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+}
+
+textarea:hover {
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
+}
+/* Modal end */
+
+/* Set properties for general overlay */
+*[class|=overlay] {
+    background: #333333dd;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* Footer */
 footer#footer {
     position: fixed;
     left: 0;

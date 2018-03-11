@@ -11,35 +11,77 @@
     <link rel="icon" href="assets/favicon.png" type="image/gif">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="scripts/html2canvas.min.js" type="text/javascript"></script>
     <script src="scripts/designs.js" type="text/javascript"></script>
 </head>
 <body>
-    <header id="header"><img src="assets/favicon.png" height="40" Width="40">&nbsp;Pixel Art Maker</header>
+    <!-- Header - <Logo> Pixel Art Maker -->
+    <header id="header"><img src="assets/favicon.png" height="40" Width="40">&nbsp;Pixel&nbsp;Art&nbsp;Maker</header>
 
+    <!-- How to use? -->
+    <div class="details-use">
+        <h3 class="icon ion-chevron-down summary-use">&nbsp;How to use?</h3>
+        <ul class="ul-use">
+            <li><span class="icon-use ion-social-chrome-outline">&nbsp;</span>Best viewed on Google Chrome.</li>
+            <li><span class="icon-use ion-grid">&nbsp;</span>Select grid size and click `Submit` to create the pixel grid.</li>
+            <li><span class="icon-use ion-android-color-palette">&nbsp;</span>Choose color from color picker.</li>
+            <li><span class="icon-use ion-paintbrush">&nbsp;</span>Paint on the pixel grid my left click or drag.</li>
+            <li><span class="icon-use ion-trash-b">&nbsp;</span>Right click or drag to erase.</li>
+            <li><span class="icon-use ion-ios-refresh-empty">&nbsp;</span>Click `Reset` to reset the pixel grid.</li>
+            <li><span class="icon-use ion-eye">&nbsp;</span>Click `Preview` to preview the gird.</li>
+            <li><span class="icon-use ion-android-download">&nbsp;</span>Click `Download` to download as png.</li>
+            <li><span class="icon-use ion-ios-upload">&nbsp;</span>To import the pixel grid as html file or text, click `Import`.</li>
+            <li><span class="icon-use ion-ios-download">&nbsp;</span>Click `Export` to export the pixel table as html.</li>
+        </ul>
+    </div>
+
+    <!-- Container of our page -->
     <div id="container">
         <h2>Choose Grid Size</h2>
+        <!-- Input form for pixel table -->
         <form id="sizePicker">
-            Grid Height:
-            <input type="number" id="inputHeight" name="height" min="1" max="100" value="1">
-            Grid Width:
-            <input type="number" id="inputWidth" name="width" min="1" max="50" value="1">
+            <div>
+                <label for="height">Grid Height:</label>
+                <input type="number" id="inputHeight" name="height" min="1" max="100" value="1">
+            </div>
+            <div>
+                <label for="width">Grid Width:</label>
+                <input type="number" id="inputWidth" name="width" min="1" max="70" value="1">
+            </div>
             <input type="submit">
             <input type="reset">
+            <button id="btn-import-html">Import</button>
         </form>
 
         <h2>Pick A Color</h2>
+        <!-- Color picker -->
         <input type="color" id="colorPicker" value="#FF9800">
 
         <h2>Design Canvas</h2>
+        <!-- The pixel table -->
         <table id="pixelCanvas"></table>
 
         <button id="btn-preview">Preview</button>
         <a id="btn-download" href="#" download="capture.png" target="_blank">Download</a>
+        <button id="btn-export">Export</button>
 
+        <!-- Div which will hold the preview of our pixel table -->
         <div id="preview-bitmap"></div>
+
+        <!-- Modal for importing the table as HTML -->
+        <div id="overlay-import-modal" class="overlay" style="display: none;">
+            <div id="import-modal">
+                <button id="close-import-modal" class="icon ion-close"></button>
+                <button id="upload-html" class="btn">Upload file</button>
+                <h4 class="import-modal-or"> OR </h4>
+                <textarea id="write-html" name="Paste HTML" type="text/html" accept="text/html" cols="100" rows="10"> </textarea>
+                <button id="btn-html-text-done">Done</button>
+            </div>
+        </div>
     </div>
 
+    <!-- Footer - Made with <love> by Rishav Agarwal using <HTML5>, <CSS3> and <JS> -->
     <footer id="footer">
         Made with <span class="icon ion-heart" style="color: red;"></span> by <strong>Rishav Agarwal</strong> using <span class="icon ion-social-html5" style="color: #e44d26;"></span>, <span class="icon ion-social-css3" style="color: #22A7F0;"></span> and <span class="icon ion-social-javascript" style="color: #4CAF50;"></span>
     </footer>
