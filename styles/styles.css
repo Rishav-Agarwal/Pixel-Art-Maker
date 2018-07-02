@@ -25,8 +25,7 @@ header#header {
     background: #F5F5F5;
     display: block;
     margin: auto;
-    max-width: 50%;
-    min-width: 50%;
+    width: 80%;
 }
 
 .details-use>.summary-use {
@@ -75,26 +74,43 @@ h2:first-of-type {
     margin-top: 0.5em;
 }
 
-table,
-tr,
-td {
-    border: 1px solid black;
+/*
+ *  TABLE
+ */
+#pixelCanvas,
+#pixelCanvas tr,
+#pixelCanvas td {
+    box-sizing: border-box;
+    border: 0.5px dotted #e0e0e0;
+    padding: 0 !important;
 }
 
-table {
+#pixelCanvas {
+    max-width: 90%;
     border-collapse: collapse;
-    margin: 0 auto;
-    box-shadow: 0px 0px 20px 2px orange;
+    margin: 10px auto;
+    box-shadow: 0px 0px 10px 1px orange;
     cursor: url(https://i.imgur.com/UO4PZhM.png) 0 20, pointer;
 }
 
-tr {
+.pixel-row {
     height: 20px;
 }
 
-td {
+.pixel-cell {
     width: 20px;
 }
+
+/*
+ *  PREVIEW
+ */
+
+#previewBitmap {
+    padding: 0;
+    margin: 8px auto;
+    max-width: 90%;
+}
+
 
 /* Form */
 form#sizePicker {

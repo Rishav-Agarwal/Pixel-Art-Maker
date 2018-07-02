@@ -1,11 +1,11 @@
 $(function() {
     /* THE SKELETON */
     //Pixel art maker logo + text
-    const header = $('header#header');
+    const header = $('#header');
     //Container of whole art maker (whole webpage except header and footer)
-    const container = $('div#container');
+    const container = $('#container');
     //Footer of the webpage
-    const footer = $('footer#footer');
+    const footer = $('#footer');
 
     /**
      * How to use?
@@ -16,7 +16,11 @@ $(function() {
     const howToUse = $('ul.ul-use');
 
     //Pixel table
-    const table = $('table#pixelCanvas');
+    const table = $('#pixelCanvas');
+    //Pixel table row
+    let tr = $('.pixel-row');
+    //Pixel table col
+    let td = $('.pixel-cell');
 
     //Button to download the pixel table as image(.png)
     const downButton = $('a#btn-download');
@@ -42,7 +46,7 @@ $(function() {
     const colorPicker = $('input#colorPicker');
 
     //Div which contains the preview image(canvas)
-    const previewImage = $('div#preview-bitmap');
+    const previewImage = $('div#previewBitmap');
 
     /* IMPORT MODAL */
     //Div that overlays the webpage so that when modal is opened, user cannnot interact with the webpage
@@ -68,14 +72,12 @@ $(function() {
     //Stores the current height, width of the pixel table
     let currHeight = 0, currWidth = 0;
 
+    //Default dimension of table
+    const defaultHeight = 20;
+    const defaultWidth = 20;
+
     //Function to make pixel table with the given inputs
     function makeGrid() {
-        //If the input exceeds the limit(width=70; height=100), set them equal to the limit
-        if (inputWidth.val() > 70)
-            inputWidth.val("70");
-        if (inputHeight.val() > 100)
-            inputHeight.val("100");
-
         const height = inputHeight.val();
         const width = inputWidth.val();
 
@@ -88,17 +90,38 @@ $(function() {
         for (let i = 0; i < height; ++i) {
             let str = "";
             for (let j = 0; j < width; ++j) {
-                str += '<td></td>';
+                str += '<td class="pixel-cell"></td>';
             }
-            table.append('<tr>' + str + '</tr>');
+            table.append('<tr class="pixel-row">' + str + '</tr>');
         }
         currHeight = height;
         currWidth = width;
+
+        setTableDimensions();
+    }
+
+    //Set width = height of a table cell
+    function setTableDimensions() {
+        tr = $('.pixel-row');
+        td = $('.pixel-cell');
+        tr.each(function() {
+            $(this).css('height', td.eq(0).outerWidth());
+        });
     }
 
     //Function to return the canvas form of our pixel table
     function getCanvas(func) {
-        html2canvas(table.get(0)).then(function(canvas) {
+        html2canvas(table.get(0), {
+            backgroundColor: null,
+            onclone: function(document) {
+                console.log(document.getElementById('pixelCanvas'));
+                document.getElementById('pixelCanvas').style.border = 'none';
+                document.querySelectorAll('#pixelCanvas tr, #pixelCanvas td').forEach(function(val) {
+                    val.style.border = 'none';
+                });
+                console.log(document.getElementById('pixelCanvas'));
+            }
+        }).then(function(canvas) {
             func(canvas);
         });
     }
@@ -158,8 +181,8 @@ $(function() {
         table.empty();
         table.css('opacity', 1);
         hidePreviewImage();
-        inputWidth.val("10");
-        inputHeight.val("10");
+        inputWidth.val(defaultWidth);
+        inputHeight.val(defaultHeight);
         makeGrid();
     }
 
@@ -203,18 +226,25 @@ $(function() {
 
     /**
      * This is the beginning of our execution.
-     * We make the default height and width of our table to be 10*10.
+     * We make the default height and width of our table to be 20*20.
      * Close the import modal, hide the download button, set responsiveness and the pixel table.
      */
-    inputWidth.val("10");
-    inputHeight.val("10");
+    inputWidth.val(defaultWidth);
+    inputHeight.val(defaultHeight);
     closeImportModal();
     hidePreviewImage();
     setContainerMargin();
     makeGrid();
 
-    //To make website more respponsive, we make the container always stay above the footer.
-    $(window).resize(setContainerMargin);
+    /*
+     *  To make website more respponsive,
+     *  we make the container always stay above the footer.
+     *  and, setTableDimesions according to window size.
+     */
+    $(window).resize(function() {
+        setContainerMargin();
+        setTableDimensions();
+    });
 
     //Toggles the How to use? section
     useSummary.on('click', function(e) {
@@ -306,6 +336,7 @@ $(function() {
     table.on('click', 'td', function(event) {
         let color = colorPicker.val();
         $(this).css('background-color', color).css('opacity', 1.0);
+        $(this).css('border-color', color).css('opacity', 1.0);
     });
 
     //If mouse is being dragged over table's cell, perform the task depending on the button pressed
@@ -314,10 +345,12 @@ $(function() {
         if (mouseLeftPressed) {
             let color = colorPicker.val();
             $(this).css('background-color', color).css('opacity', 1.0);
+            $(this).css('border-color', color).css('opacity', 1.0);
         }
         //If the right button is pressed while dragging, remove the color from the dragged cell
         else if (mouseRightPressed) {
             $(this).css('background-color', 'white').css('opacity', 0.0);
+            $(this).css('border-color', '#e0e0e0').css('opacity', 1.0);
         }
     });
 
@@ -344,6 +377,7 @@ $(function() {
             //Condition for right click (If realeased button is same as pressed button)
             if (mouseRightPressed && e.target == rightClickBox) {
                 $(rightClickBox ).css('background-color', 'white').css('opacity', 0.0);
+                $(rightClickBox).css('border-color', '#e0e0e0').css('opacity', 1.0);
                 rightClickBox = null;
             }
             mouseRightPressed = false;
