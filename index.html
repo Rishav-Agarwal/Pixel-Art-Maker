@@ -4,91 +4,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixel Art Maker - Rishav Agarwal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
-    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel = "stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/responsive.css">
-    <link rel="icon" href="https://i.imgur.com/MojJBRk.png" type="image/gif">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <script src="scripts/html2canvas.min.js" type="text/javascript"></script>
-    <script src="scripts/designs.js" type="text/javascript"></script>
+    <link rel="icon" href="images/icon.png" type="image/png">
 </head>
 <body>
-    <!-- Header - <Logo> Pixel Art Maker -->
-    <header id="header"><img src="https://i.imgur.com/MojJBRk.png" height="40" Width="40"> Pixel Art Maker</header>
+    <div class="container-fluid">
+        <div class="row" id="container">
+            <div class="col-12 design">
+                <h2 class="flex-grow-1">Design Canvas</h2>
 
-    <!-- How to use? -->
-    <div class="details-use">
-        <h3 class="icon ion-chevron-down summary-use">&nbsp;How to use?</h3>
-        <ul class="ul-use">
-            <li><span class="icon-use ion-social-chrome-outline">&nbsp;</span>Best viewed on Google Chrome.</li>
-            <li><span class="icon-use ion-grid">&nbsp;</span>Select grid size and click `Submit` to create the pixel grid.</li>
-            <li><span class="icon-use ion-android-color-palette">&nbsp;</span>Choose color from color picker.</li>
-            <li><span class="icon-use ion-paintbrush">&nbsp;</span>Paint on the pixel grid my left click or drag.</li>
-            <li><span class="icon-use ion-trash-b">&nbsp;</span>Right click or drag to erase.</li>
-            <li><span class="icon-use ion-ios-refresh-empty">&nbsp;</span>Click `Reset` to reset the pixel grid.</li>
-            <li><span class="icon-use ion-eye">&nbsp;</span>Click `Preview` to preview the gird.</li>
-            <li><span class="icon-use ion-android-download">&nbsp;</span>Click `Download` to download as png.</li>
-            <li><span class="icon-use ion-ios-upload">&nbsp;</span>To import the pixel grid as html file or text, click `Import`.</li>
-            <li><span class="icon-use ion-ios-download">&nbsp;</span>Click `Export` to export the pixel table as html.</li>
-        </ul>
+                <!-- The pixel table -->
+                <table id="pixelCanvas">
+                </table>
+
+                <!-- Div which will hold the preview of our pixel table -->
+                <div id="previewBitmap">
+                    <hr>
+                    <h2>Preview</h2>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Container of our page -->
-    <div id="container">
-        <h2>Choose Grid Size</h2>
-        <!-- Input form for pixel table -->
-        <form id="sizePicker">
-            <div>
-                <label for="height">Grid Height:</label>
-                <input type="number" id="inputHeight" name="height" min="1" max="100" value="1">
+    <div class="options ui-widget-content rad-circle">
+        <button class="min-max-options"><i class="fas fa-plus-circle"></i></button>
+
+        <div class="content-options disp-plus">
+            <!-- Header - <Logo> Pixel Art Maker -->
+            <header id="header">
+                <i class="fas fa-paint-brush" style="color: yellow;"></i> Pixel Art Maker
+            </header>
+
+            <!-- Input form for pixel table -->
+            <form id="sizePicker">
+                <input type="number" id="inputHeight" name="height" min="1" value="1">
+                <p class="w-h-x"><i class="fas fa-times"></i></p>
+                <input type="number" id="inputWidth" name="width" min="1" value="1">
+                <div class="submit-wrapper">
+                    <input type="submit" value="GO!">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button id="btn-reset-art" title="Reset"><i class="fas fa-power-off"></i></button>
+                    <div id="btn-import-html" data-toggle="modal" data-target="#overlay-import-modal" title="Import"><i class="fas fa-file-import"></i></div>
+                </div>
+            </form>
+
+            <div class="color-selector d-flex align-items-center">
+                <h4 style="color: white; font-weight: bold;">Color <i class="fas fa-palette"></i></h4>
+                <!-- Color picker -->
+                <input type="color" id="colorPicker" value="#ffeb3b">
             </div>
-            <div>
-                <label for="width">Grid Width:</label>
-                <input type="number" id="inputWidth" name="width" min="1" max="70" value="1">
+
+            <div class="art-result d-flex justify-content-center">
+                <button id="btn-preview">Preview</button>
+                <a id="btn-download" href="#" download="capture.png" target="_blank">Download</a>
+                <button id="btn-export">Export</button>
             </div>
-            <div>
-                <input type="submit">
-                <input type="reset">
-                <button id="btn-import-html">Import</button>
+        </div>
+    </div>
+
+    <div class="how-to-use" data-toggle="modal" data-target="#howToUse" title="How to use?">
+        <i class="fas fa-question"></i>
+    </div>
+
+    <!-- Modal for importing the table as HTML -->
+    <div id="overlay-import-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title summary-use">Import art</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 32px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button id="upload-html" class="btn">Upload file</button>
+                    <h4 class="import-modal-or"> OR </h4>
+                    <textarea id="write-html" name="Paste HTML" type="text/html" accept="text/html" cols="100" rows="5"> </textarea>
+                    <button id="btn-html-text-done">Done</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
-        </form>
+        </div>
+    </div>
 
-        <h2>Pick A Color</h2>
-        <!-- Color picker -->
-        <input type="color" id="colorPicker" value="#FF9800">
-
-        <h2>Design Canvas</h2>
-        <!-- The pixel table -->
-        <table id="pixelCanvas">
-        </table>
-
-        <button id="btn-preview">Preview</button>
-        <a id="btn-download" href="#" download="capture.png" target="_blank">Download</a>
-        <button id="btn-export">Export</button>
-
-        <!-- Div which will hold the preview of our pixel table -->
-        <div id="previewBitmap"></div>
-
-        <!-- Modal for importing the table as HTML -->
-        <div id="overlay-import-modal" class="overlay" style="display: none;">
-            <div id="import-modal">
-                <button id="close-import-modal" class="icon ion-close"></button>
-                <button id="upload-html" class="btn">Upload file</button>
-                <h4 class="import-modal-or"> OR </h4>
-                <textarea id="write-html" name="Paste HTML" type="text/html" accept="text/html" cols="100" rows="10"> </textarea>
-                <button id="btn-html-text-done">Done</button>
+    <!-- How to use? -->
+    <div id="howToUse" class="modal fade details-use">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title summary-use">How to use?</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 32px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="ul-use">
+                        <li><i class="fab fa-chrome icon-use"></i> Best viewed on Google Chrome.</li>
+                        <li><i class="fas fa-th-large icon-use"></i> Select grid size and click `Submit` to create the pixel grid.</li>
+                        <li><i class="fas fa-palette icon-use"></i> Choose color from color picker.</li>
+                        <li><i class="fas fa-paint-brush icon-use"></i> Paint on the pixel grid my left click or drag.</li>
+                        <li><i class="fas fa-trash icon-use"></i> Right click or drag to erase.</li>
+                        <li><i class="fas fa-redo icon-use"></i> Click `Reset` to reset the pixel grid.</li>
+                        <li><i class="far fa-eye icon-use"></i> Click `Preview` to preview the gird.</li>
+                        <li><i class="fas fa-download icon-use"></i> Click `Download` to download as png.</li>
+                        <li><i class="fas fa-file-import icon-use"></i> To import the pixel grid as html file or text, click `Import`.</li>
+                        <li><i class="fas fa-file-export icon-use"></i> Click `Export` to export the pixel table as html.</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Ok</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Footer - Made with <love> by Rishav Agarwal using <HTML5>, <CSS3> and <JS> -->
     <footer id="footer">
-        Made with <span class="icon ion-heart" style="color: red;"></span> by <strong>Rishav Agarwal</strong> using <span class="icon ion-social-html5" style="color: #e44d26;"></span>, <span class="icon ion-social-css3" style="color: #22A7F0;"></span> and <span class="icon ion-social-javascript" style="color: #4CAF50;"></span>
+        <p><i class="fas fa-code"></i> with <i class="fas fa-heart" style="color: red;"></i> by <a href="https://rishav-agarwal.github.io" target="_blank"><strong>Rishav Agarwal</strong></a> using <i class="fab fa-html5" style="color: #e44d26;"></i>, <i class="fab fa-css3" style="color: #22A7F0;"></i> and <i class="fab fa-js-square" style="color: #4CAF50;"></i></p>
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="scripts/jquery.ui.touch-punch.min.js"></scrript>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+    <script src="scripts/html2canvas.min.js" type="text/javascript"></script>
+    <script src="scripts/designs.js" type="text/javascript"></script>
 </body>
 </html>

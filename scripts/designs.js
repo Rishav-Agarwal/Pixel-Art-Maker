@@ -7,13 +7,10 @@ $(function() {
     //Footer of the webpage
     const footer = $('#footer');
 
-    /**
-     * How to use?
-     */
-    //The heading/summary of the instructions
-    const useSummary = $('h3.summary-use');
-    //Div which contains the how-to-use?
-    const howToUse = $('ul.ul-use');
+    //Options column
+    const options = $('.options');
+    //Minimize/Maximize options column
+    const minMaxOpt = $('.min-max-options');
 
     //Pixel table
     const table = $('#pixelCanvas');
@@ -43,20 +40,16 @@ $(function() {
     //Button to let user import pixel table as html file or pasting text
     const importButton = $('#btn-import-html');
     //Input for color to be filled
-    const colorPicker = $('input#colorPicker');
+    const colorPicker = $('#colorPicker');
 
     //Div which contains the preview image(canvas)
-    const previewImage = $('div#previewBitmap');
+    const previewImage = $('#previewBitmap');
 
     /* IMPORT MODAL */
-    //Div that overlays the webpage so that when modal is opened, user cannnot interact with the webpage
+    //Import modal
     const importModalOverlay = $('#overlay-import-modal');
-    //Modal that opens when user wants to import pixel table as html
-    const importModal = $('#import-modal');
     //Button to upload html from modal
     const uploadHtml = $('button#upload-html');
-    //Input file from modal
-    const closeImportModalButton = $('#close-import-modal');
     //TextArea in which html is written or pasted
     const textAreaHtmlImport = $('textarea#write-html');
     //Button to submit input html as text
@@ -114,12 +107,10 @@ $(function() {
         html2canvas(table.get(0), {
             backgroundColor: null,
             onclone: function(document) {
-                console.log(document.getElementById('pixelCanvas'));
                 document.getElementById('pixelCanvas').style.border = 'none';
                 document.querySelectorAll('#pixelCanvas tr, #pixelCanvas td').forEach(function(val) {
                     val.style.border = 'none';
                 });
-                console.log(document.getElementById('pixelCanvas'));
             }
         }).then(function(canvas) {
             func(canvas);
@@ -192,8 +183,9 @@ $(function() {
      *      decreases, the footer might expand to more than one line, so to make
      *      the contents always stay above the footer, this method is used.
      */
-    function setContainerMargin() {
-        container.css("margin-bottom", footer.height() + 30);
+    function setContainerPadding() {
+        container.css('padding-bottom', footer.height() + "px");
+        container.css('height', 'calc(100vh)');
     }
 
     //Function to return a text file from the input text
@@ -209,19 +201,7 @@ $(function() {
     //Function to close the import modal
     function closeImportModal() {
         importModalOverlay.hide();
-        importModal.hide();
-    }
-
-    //Function to open the import modal
-    function openImportModal() {
-        importModalOverlay.show();
-        importModal.show();
-        let h = importModal.height();
-        let w = importModal.width();
-        importModal.height(0.8 * h);
-        importModal.width(0.8 * w);
-        importModal.fadeTo(0,0);
-        importModal.animate({height: h, width: w, opacity: 1}, 250, "easeOutCubic");
+        importModalOverlay.modal('hide');
     }
 
     /**
@@ -229,12 +209,26 @@ $(function() {
      * We make the default height and width of our table to be 20*20.
      * Close the import modal, hide the download button, set responsiveness and the pixel table.
      */
+    setContainerPadding();
+    options.draggable({
+        containment: 'document'
+    });
+    colorPicker.spectrum({
+        showInput: true,
+        allowEmpty: true,
+        showAlpha: true,
+        showPalette: true,
+        preferredFormat: 'rgba',
+        containerClassName: 'color-picker',
+        replacerClassName: 'color-picker-replacer'
+    });
     inputWidth.val(defaultWidth);
     inputHeight.val(defaultHeight);
-    closeImportModal();
     hidePreviewImage();
-    setContainerMargin();
     makeGrid();
+    $('input[type=number]').bind('click', function() {
+        $(this).focus();
+    })
 
     /*
      *  To make website more respponsive,
@@ -242,26 +236,14 @@ $(function() {
      *  and, setTableDimesions according to window size.
      */
     $(window).resize(function() {
-        setContainerMargin();
+        setContainerPadding();
         setTableDimensions();
     });
 
-    //Toggles the How to use? section
-    useSummary.on('click', function(e) {
-        $(this).toggleClass("ion-chevron-right");
-        $(this).toggleClass("ion-chevron-down");
-        howToUse.toggle(500);
-    });
-
-    //If user wants to import table, open inport modal
-    importButton.on('click', function(e) {
-        e.preventDefault();
-        openImportModal();
-    });
-
-    //If the user has uploaded table, pasted the table or wants wo cancel, close the modal
-    closeImportModalButton.on('click', function(e) {
-        closeImportModal();
+    minMaxOpt.on('click', function(e) {
+        $(this).children('svg').toggleClass('fa-minus-circle fa-plus-circle');
+        $('.content-options').toggleClass('disp-minus disp-plus');
+        options.toggleClass('rad-circle');
     });
 
     /**
@@ -315,7 +297,7 @@ $(function() {
     reset.on('click', function(e) {
         e.preventDefault();
         resetArt();
-        colorPicker.val("#FF9800");
+        colorPicker.val('#ffeb3b');
     });
 
     //If user clicks `export` button, export the table as html
@@ -335,8 +317,8 @@ $(function() {
     //If a cell in table is clicked, fill the chosen color
     table.on('click', 'td', function(event) {
         let color = colorPicker.val();
-        $(this).css('background-color', color).css('opacity', 1.0);
-        $(this).css('border-color', color).css('opacity', 1.0);
+        $(this).css('background-color', color);
+        $(this).css('border-color', color);
     });
 
     //If mouse is being dragged over table's cell, perform the task depending on the button pressed
@@ -344,13 +326,13 @@ $(function() {
         //If left button is pressed while draging, fill the chosen color in the dragged cell
         if (mouseLeftPressed) {
             let color = colorPicker.val();
-            $(this).css('background-color', color).css('opacity', 1.0);
-            $(this).css('border-color', color).css('opacity', 1.0);
+            $(this).css('background-color', color);
+            $(this).css('border-color', color);
         }
         //If the right button is pressed while dragging, remove the color from the dragged cell
         else if (mouseRightPressed) {
-            $(this).css('background-color', 'white').css('opacity', 0.0);
-            $(this).css('border-color', '#e0e0e0').css('opacity', 1.0);
+            $(this).css('background-color', '#ffffff00');
+            $(this).css('border-color', '#bdbdbd');
         }
     });
 
@@ -376,8 +358,8 @@ $(function() {
         else if (e.which === 3) {
             //Condition for right click (If realeased button is same as pressed button)
             if (mouseRightPressed && e.target == rightClickBox) {
-                $(rightClickBox ).css('background-color', 'white').css('opacity', 0.0);
-                $(rightClickBox).css('border-color', '#e0e0e0').css('opacity', 1.0);
+                $(rightClickBox ).css('background-color', '#ffffff00');
+                $(rightClickBox).css('border-color', '#bdbdbd');
                 rightClickBox = null;
             }
             mouseRightPressed = false;
@@ -388,7 +370,7 @@ $(function() {
     previewButton.on('click', function() {
         if (currWidth > 0 && currHeight > 0) {
             getCanvas(function(canvas) {
-                previewImage.empty();
+                previewImage.children('canvas').remove();
                 previewImage.append(canvas);
                 showDownloadButton();
             });

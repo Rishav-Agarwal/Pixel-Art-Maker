@@ -1,5 +1,24 @@
-@media screen and (min-width: 780px) {
-    .details-use {
-        width: 55%;
+@media screen and (min-width: 1200px) {
+
+    .w-h-x {
+        margin: 4px 0;
+        padding: 0 12px;
+        flex-basis: 0 0 10%;
+        max-width: 10%;
+    }
+
+    input[type=number] {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+
+    .submit-wrapper {
+        margin: 0px;
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+
+    input[type=submit] {
+        float: right;
     }
 }

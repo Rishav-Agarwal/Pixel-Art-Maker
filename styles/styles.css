@@ -5,65 +5,72 @@ body {
     font-family: 'Poiret One', cursive;
 }
 
-/* Customize header */
-header#header {
-    font-size: 60px;
-    font-weight: 700;
-    padding: 10px;
-    color: orange;
-    font-family: 'VT323', monospace;
-}
-
-/**
- * How to use?
+/*
+ *  Options
  */
-.details-use {
+
+/* Main layout */
+.options {
+    min-width: 48px;
+    max-width: 320px;
+    min-height: 48px;
+    z-index: 100;
+    background: #ef5350;
+    box-shadow: 2px 0 5px grey;
+    max-height: 100%;
+    overflow-y: auto;
+    position: absolute;
+    left: 10px;
+    top: 10px;
     padding: 8px;
-    padding-top: 0px;
-    border: 3px dotted orange;
-    border-radius: 8px;
-    background: #F5F5F5;
-    display: block;
-    margin: auto;
-    width: 80%;
 }
 
-.details-use>.summary-use {
-    color: orange;
-    font-size: 20px;
-    padding: 4px;
-    border-radius: 4px;
-    background: white;
-    border-left: 5px solid orange;
-    border-right: 5px solid orange;
-    cursor: pointer;
-}
-
-.details-use>.ul-use {
-    font-size: 16px;
-    font-weight: normal;
-    list-style-type: none;
-    margin: 0;
+.min-max-options {
+    background: #fff0;
+    outline: none;
+    border: none;
+    position: absolute;
+    left: 0;
+    top: 0;
     padding: 0;
-    text-align: left;
-    display: none;
+    font-size: 20px;
+    padding: 0 6px;
+    color: white;
     cursor: pointer;
 }
 
-.details-use>ul>li {
-    padding: 4px;
-}
-
-.details-use>ul>li:hover {
-    font-weight: bold;
+.min-max-options:hover {
     background: white;
-    border-left: 5px solid orange;
-    border-right: 5px solid orange;
-    border-radius: 4px;
+    color: black;
 }
 
-.icon-use {
-    color: orange;
+.content-options {
+    transition: all 1s ease;
+}
+
+.disp-plus {
+    display: none;
+}
+
+.rad-circle {
+    border-radius: 10000px;
+}
+
+.design {
+    z-index: 50;
+    background: radial-gradient(circle, white, #FFCC80);
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+/* Customize header */
+#header {
+    font-size: 28px;
+    font-weight: 700;
+    padding: 4px;
+    margin: 0;
+    color: white;
+    font-family: 'VT323', monospace;
 }
 
 h2 {
@@ -77,11 +84,12 @@ h2:first-of-type {
 /*
  *  TABLE
  */
+
 #pixelCanvas,
 #pixelCanvas tr,
 #pixelCanvas td {
     box-sizing: border-box;
-    border: 0.5px dotted #e0e0e0;
+    border: 0.5px dotted #bdbdbd;
     padding: 0 !important;
 }
 
@@ -89,8 +97,8 @@ h2:first-of-type {
     max-width: 90%;
     border-collapse: collapse;
     margin: 10px auto;
-    box-shadow: 0px 0px 10px 1px orange;
-    cursor: url(https://i.imgur.com/UO4PZhM.png) 0 20, pointer;
+    box-shadow: 0px 0px 20px 2px #ffe0b2;
+    cursor: url(../images/icon.png) 0 20, pointer;
 }
 
 .pixel-row {
@@ -107,100 +115,125 @@ h2:first-of-type {
 
 #previewBitmap {
     padding: 0;
-    margin: 8px auto;
+    margin: 12px auto;
     max-width: 90%;
 }
 
 
-/* Form */
-form#sizePicker {
+/*
+ *  Form
+ */
+
+#sizePicker {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.w-h-x {
+    margin: 4px 0;
+    padding: 0 10px;
+    flex-basis: 0 0 16.66%;
 }
 
 input[type=number] {
-    width: 6em;
-    transition: box-shadow 0.5s;
-    padding: 10px;
-    width: 100px;
-    margin: 10px;
     border-radius: 4px;
-    box-shadow: 8px 5px 20px 0px rgba(0, 0, 0, 0.3);
+    width: 60px;
+    flex: 0 0 42%;
+    max-width: 42%;
+    padding: 4px;
 }
 
-input[type=number]:hover{
-    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
-}
-
-input[type=submit], input[type=reset], [id|=btn], [class|=btn] {
-    display: inline-block;
-    padding: 10px;
-    width: 150px;
-    margin: 10px;
-    box-shadow: 8px 5px 20px 0px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.5s;
-    background-color: orange;
+input[type=reset], [id|=btn], [class|=btn] {
+    margin: 12px;
+    padding: 4px 8px;
+    background-color: yellow;
     border: none;
     outline: none;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 100px;
     text-decoration: none;
     font-family: 'Poiret One', cursive;
     color: black;
 }
 
 input[type=submit]:hover, input[type=reset]:hover, [id|=btn]:hover, [class|=btn]:hover {
-    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    color: black;
     cursor: pointer;
+}
+
+input[type=submit] {
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    background-color: yellow;
+    text-decoration: none;
+    font-family: 'Poiret One', cursive;
+    color: black;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.submit-wrapper {
+    margin: 8px;
+    flex: 0 0 100%;
+    width: 100%;
+}
+
+#colorPicker {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.color-picker {
+    background: #FFE0B2;
+}
+
+.color-picker-replacer>div {
+    display: none;
+}
+
+.color-picker-replacer>div:first-child {
+    display: block;
+    border: none;
+    width: 100%;
+}
+
+.color-picker-replacer {
+    margin: 4px 20px;
+    flex-grow: 1;
+    height: 12px;
+    padding: 0;
+    border: solid black 1px;
 }
 /* Form end */
 
 /* Modal for importing table */
-div#import-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px;
-    text-align: center;
-    background: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0px 0px 20px 0px rgb(0, 0, 0);
-    max-width: 90%;
-    max-height: 90%;
-    min-width: 50%;
+
+#upload-html {
+    margin: 0;
+    background: orange;
 }
 
-#close-import-modal {
-    color: orange;
-    background-color: rgba(0, 0, 0, 0.0);
-    position: fixed;
-    left: 100%;
-    padding: 8px;
-    transform: translateX(-100%);
-    transition: filter 0.5s;
-    top: 0;
-    border: none;
-    outline: none;
-    font-size: 24px;
-    cursor: pointer;
-    filter: drop-shadow(3px 3px 5px #00000044);
-}
-
-#close-import-modal:hover {
-    filter: drop-shadow(0px 0px 1px #00000044);
+#btn-html-text-done {
+    margin: 0;
+    background: orange;
 }
 
 h4.import-modal-or {
+    margin: 8px 0;
     text-align: center;
     overflow: hidden;
 }
 
 h4.import-modal-or::before, h4.import-modal-or::after {
-    background-color: #000000;
+    background-color: #bdbdbd;
     height: 1px;
     display: inline-block;
     width: 50%;
@@ -218,40 +251,69 @@ h4.import-modal-or::after {
 }
 
 textarea {
-    transition: box-shadow 0.5s;
     border-radius: 4px;
     outline: none;
     max-width: 100%;
     max-height: 100%;
     min-width: 50%;
-    box-shadow: 8px 5px 20px 0px rgba(0, 0, 0, 0.3);
     font-size: 16px;
-}
-
-textarea:hover {
-    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
 }
 /* Modal end */
 
-/* Set properties for general overlay */
-*[class|=overlay] {
-    background: #333333dd;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
+.art-result {
+    margin: 20px 0;
+}
+
+
+/*
+ *  How to use?
+ */
+
+.how-to-use {
+    z-index: 100;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    background: orange;
+    box-shadow: 8px 5px 20px 0px rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    font-size: 20px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.how-to-use:hover {
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.ul-use {
+    list-style: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.icon-use {
+    color: orange;
 }
 
 /* Footer */
-footer#footer {
+#footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     font-size: 20px;
-    padding: 10px;
-    z-index: 1;
+    z-index: 1000;
     box-shadow: 0px -3px 3px 0px rgba(0, 0, 0, 0.3);
     background: white;
+}
+
+#footer>p {
+    margin: 4px auto;
+    padding: 0;
 }
