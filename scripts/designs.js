@@ -347,12 +347,31 @@ $(function() {
             rightClickBox = e.target;
         }
     });
+    
+    
 
     /**
      * If the mouse button is realeased, update the mouse button trackers'
      * If right button is realeased, check if it is a click event. If right click, remove color from the cell
      */
+     /*
     table.mouseup(function(e) {
+        if (e.which === 1)
+            mouseLeftPressed = false;
+        else if (e.which === 3) {
+            //Condition for right click (If realeased button is same as pressed button)
+            if (mouseRightPressed && e.target == rightClickBox) {
+                $(rightClickBox ).css('background-color', '#ffffff00');
+                $(rightClickBox).css('border-color', '#bdbdbd');
+                rightClickBox = null;
+            }
+            mouseRightPressed = false;
+        }
+    });
+    */
+    //Added the eventListner on the whole document to fix the bug where mouseup is not registered outside the table
+    //This fixes the bug due to which mouseLeftPressed remains true when mouse up occurs outside table and pixel is coloured with just mouseover.
+    document.addEventListener("mouseup",(e) => {
         if (e.which === 1)
             mouseLeftPressed = false;
         else if (e.which === 3) {
